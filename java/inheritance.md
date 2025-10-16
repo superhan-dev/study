@@ -109,13 +109,43 @@ public class Main {
     public static void main(String[] args){
         Parent p1 = new Child();
 
-
         p1.greeting("Hello");
 
-        // p1에서는 자식 요소에서 Overloading 한 메소드를 사용할 수 없다.
+        /**
+         * p1에서는 생성을 child 라고 했더라도 Parent로 이미 할당 했기 때문에
+         * Metadata에 정의된 Parent의 값대로 바라보게 된다.
+         * 자식 요소에서 Overloading 한 메소드를 사용할 수 없다.
+         *  */
         p1.greeting("Hello", "I love you guys."); // 에러가 발생한다. (1개의 인수가 필요하지만 2이(가) 발견되었습니다.)
 
-    }
+        Child c1 = new Child();
 
+        c1.greeting("Hello I am a child", "I can pass this value");
+
+        // 하지만 이렇게 Child로 캐스팅해서 p1을 c2 변수에 넣을 수는 있다.
+        Child c2 = (Child)p1;
+        c2.greeting("Hello", "I love you guys.");
+    }
 }
+```
+
+# 다형성
+
+위 예제에서 아래와 같은 코드를 구현하게 되면 Parent 클래스로 여러 형태의 자식 클래스들을 생성할 수 있다.
+
+이를 Java의 특징 중 하나인 다형성(Polymorphism)이라고도 표현한다.
+
+```java
+public class OtherChild extends Parent {
+    //...
+}
+
+public class Main {
+    public static void main(String[] args){
+        Parent p1 = new Parent();
+        Parent p2 = new Child();
+        Parent p2 = new OtherChild();
+    }
+}
+
 ```
