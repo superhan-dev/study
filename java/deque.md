@@ -1,13 +1,18 @@
-# Deque를 사용한 Stsck 
+# Deque를 사용한 Stsck 과 Queue
 
 - 작성일 
     - 2025-10-20
 
 # 개요
 Collection Framework를 구현해보던 중 Deque라는 객체를 이용해서 Stack을 구현해 보았다. 
-그러던 중 예상치 못한 문제를 만나게 되었다. 
+그러던 중 예상치 못한 문제를 만나게 되었고 Stack 과 Queue를 정리하면서 함께 정리해보려 한다. 
 
-## 실행 코드
+
+## Deque
+
+deque는 앞에서 부터 값을 붙이기 때문에 [0, 1, a, c, b, a] 이와 같은식으로 값이 들어가며 removeFirst() 메소드를 호출하면 stack을 만들고 removeLast()를 호출하면 queue를 만드는 특징이 있다.
+
+## 에러 발생 
 
 코드와 같이 Deque를 선언하고 값을 push한 뒤 `removeFirst()`를 호출하여 stack과 `removeLast()`로 queue를 구현하면서 테스트를 해보려고 했으나 다음과 같은 에러를 만나게 되었다.
 
