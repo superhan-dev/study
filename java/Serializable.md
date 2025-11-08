@@ -81,7 +81,7 @@ public class Main {
 
 직렬화가 완료되면 다음과 같이 Bytecode로 직렬화가 된 것을 확인할 수 있다.
 
-![직렬화된 바이트코드 예시](../images/java/serialized-byte-code-image)
+![직렬화된 바이트코드 예시](../images/java/serialized-byte-code-image.png)
 
 ---
 
