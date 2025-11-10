@@ -55,12 +55,134 @@ spring.kafka.producer.value-serializer=org.springframework.kafka.support.seriali
 spring.kafka.producer.properties.spring.json.add.type.headers=false
 ```
 
+# Java Bean을 통한 config
+
+## KafkaProducerConfig
+
+```java
+package org.olimplanet.kafkademo.config;
+
+import org.apache.kafka.clients.admin.NewTopic;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.core.DefaultKafkaProducerFactory;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.support.serializer.JsonSerializer;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@Configuration
+public class KafkaProducerConfig {
+    @Bean
+    public NewTopic createTopic() {
+        return new NewTopic("test-topic-1", 3, (short) 1);
+    }
+
+    @Bean
+    public NewTopic createTopic2() {
+        return new NewTopic("customer-topic-1", 3, (short) 1);
+    }
+
+    // config를 작성하고
+    @Bean
+    public Map<String, Object> producerConfigs() {
+        Map<String, Object> props = new HashMap<>();
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,"localhost:9092");
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+
+        return props;
+    }
+
+    // 팩토리로 내보내고
+    @Bean
+    public ProducerFactory<String, Object> producerFactory(){
+        return new DefaultKafkaProducerFactory<>(producerConfigs());
+    }
+
+    // KafkaTemplate으로 내보낼 수 있다.
+    @Bean
+    public KafkaTemplate<String, Object> kafkaTemplate(){
+        return new KafkaTemplate<>(producerFactory());
+    }
+}
+
+
+```
+
+## KafkaConsumerConfiguration
+
+```java
+package org.olimplanet.kafkaconsumerdemo.config;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.kafka.clients.consumer.Consumer;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.common.serialization.StringDeserializer;
+import org.olimplanet.kafkaconsumerdemo.controller.dto.CustomerDto;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
+import org.springframework.kafka.config.KafkaListenerContainerFactory;
+import org.springframework.kafka.core.ConsumerFactory;
+import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
+import org.springframework.kafka.support.serializer.JsonDeserializer;
+
+@Configuration
+@EnableKafka
+public class KafkaConsumerConfiguration {
+
+    @Bean
+    public Map<String, Object> consumerConfig() {
+        Map<String, Object> props = new HashMap<>();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "customer-listener");
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+        props.put(
+                JsonDeserializer.TRUSTED_PACKAGES,
+                "org.olimplanet.kafkaconsumerdemo.controller.dto,org.olimplanet.kafkademo.controller.dto");
+        props.put(JsonDeserializer.TYPE_MAPPINGS,
+                "customerDto:org.olimplanet.kafkaconsumerdemo.controller.dto.CustomerDto");
+        props.put(JsonDeserializer.USE_TYPE_INFO_HEADERS, false);
+        props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, CustomerDto.class.getName());
+        return props;
+    }
+
+    @Bean
+    public ConsumerFactory<String, Object> consumerFactory() {
+        return new DefaultKafkaConsumerFactory<>(consumerConfig());
+    }
+
+    @Bean
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Object>> kafkaListenerContainerFactory() {
+         ConcurrentKafkaListenerContainerFactory<String, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
+         factory.setConsumerFactory(consumerFactory());
+         return factory;
+    }
+}
+
+
+
+```
+
 ## consumer properties 설정 문제
 
 카프카는 데이터를 deserialize 할때 신뢰할 수 있는 타입으로 제한하는 화이트리스트를 제공한다. 이때 사용하는 옵션이 `spring.json.trusted.packages`옵션이다.
 
 # 관련 키워드
 
+- KafkaTemplate
+  - 개념 정리 필요
 - Lag
   - 재시도 없이 컨테이너에 문제가 생겼을 때 카운트 되는 에러 플래그
 - DLQ(Dead Letter Queue)
