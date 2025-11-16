@@ -12,14 +12,8 @@ String 은 final 키워드를 사용하여 구현된 확장 불가 클래스이�
 
 # String Constant Pool
 
-Java에서 기본적으로 리터럴을 사용하여 문자열을 생성할 수 있다. `"Value"`와 같은 리터럴 문자열을 코드를 작성한다면 컴파일시 Heap 메모리 안에 있는 `SCP(String Constant Pool)`에 저장된다.
-이는 중복된 문자열이 메모리 상에 존재하는 것을 최소하기 위한 수단이며 문자열 뿐만 아니라 상수로 취급되는 모든 값들은 SCP에 적재되어 중복된 상수값으로 저장되어 코드에서 사용된다.
+Java에서 기본적으로 리터럴을 사용하여 문자열을 생성할 수 있다. `"Value"`와 같은 리터럴 문자열을 코드를 작성한다면 컴파일시 Heap 메모리 안에 있는 SCP(String Constant Pool)에 저장된다. 이는 중복된 문자열이 메모리 상에 존재하는 것을 최소하기 위한 수단이며 문자열 뿐만 아니라 상수로 취급되는 모든 값들은 SCP에 적재되어 중복된 상수값을 사용하는 코드에서 사용된다.
 하지만 String 생성자를 통해 생성한 값은 SCP에도 저장이 되지만 하나의 인스턴스로 Heap에 위치하게 된다.
-
-때문에 문자열을 수정할 때마다 계속해서 새로운 인스턴스를 생성하게 된다.
-이는 생성자를 통해서 생성된 문자열 뿐만 아니라 String이 갖는 성격이다.
-
-때문에 문자열을 수정하기위해 미리 저장소를 객체 내부에 가지고있는 StringBuffer 또는 StringBuilder를 사용하는 것을 권장한다.
 
 ![Strings in memory](../images/java/java-string-content-pool.png)
 
@@ -31,9 +25,8 @@ Java에서 기본적으로 리터럴을 사용하여 문자열을 생성할 수 
 
 ## Thread Safe란?
 
-Java는 기본적으로 `Multi threaded` 환경에서 동작하는 언어로 동시에 특정 값에 접근할때 `Thread` 간 경쟁이 일어난다.
-때문에 `Thread`간 `lock`을 걸어 특정 값에 동시에 접근하는 것을 방지하는 장치들이 존재하는데 이를 `Thread Safe`하다고 표현한다.
-즉 `Multi Threads` 간에 경쟁이 벌어지지 않는 상태를 `Thread Safe`라고 하는 것이다.
+Java는 기본적으로 Multithreaded 환경에서 동작하는 언어로 동시에 특정 값에 접근할때 Thread 간 경쟁을 하여 값에 대한 처리를 하게된다. 때문에 Thread간 lock을 걸어 특정 값에 동시에 접근하는 것을 피하는 기법이 있는데 이를 Thread Safe하다고 표현한다.
+즉 MultiThreads 간에 경쟁이 벌어지지 않는 상태를 Thread Safe라고 하는 것이다.
 
 ### StringBuffer
 
