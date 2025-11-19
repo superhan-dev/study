@@ -1,8 +1,8 @@
-# Enum Vs Varchar Vs tinyint
-
 # 작성일
 
 - 2025-10-22
+
+# Enum Vs Varchar Vs tinyint
 
 # mysql enum 타입의 특징과 단점
 

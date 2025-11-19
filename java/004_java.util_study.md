@@ -1,8 +1,8 @@
-# java.util package study
-
 # 작성일
 
-    - 2025-10-22
+- 2025-10-22
+
+# java.util package study
 
 # Collections.shuffle()
 

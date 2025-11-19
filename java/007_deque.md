@@ -1,7 +1,8 @@
-# Deque를 사용한 Stsck 과 Queue
+# 작성일
 
-- 작성일 
-    - 2025-10-20
+- 2025-10-20
+
+# Deque를 사용한 Stsck 과 Queue
 
 # 개요
 Collection Framework를 구현해보던 중 Deque라는 객체를 이용해서 Stack을 구현해 보았다. 
