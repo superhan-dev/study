@@ -44,9 +44,6 @@ public class Main {
 
             quickSort(arr, 0, arr.length-1);
             for(int i=0;i<arr.length;i++) System.out.print(arr[i]);
-
-
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -66,18 +63,13 @@ public class Main {
 
             if(start > end) break;
 
-            int temp = arr[start];
-            arr[start] = arr[end];
-            arr[end] = temp;
+            swap(arr, start, end);
 
             start++;
             end--;
         }
 
-        int temp = arr[p];
-        arr[p] = arr[end];
-        arr[end] = temp;
-
+        swap(arr, p, end);
         return end;
     }
 
@@ -88,6 +80,36 @@ public class Main {
             quickSort(arr, pivot+1, right);
         }
     }
+
+    static void swap(int[] arr, int i, int j){
+      int temp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = temp;
+    }
+}
+
+```
+
+## 다른 방식의 partition
+
+arr의 파티션을 나눈 영역에서 피벗보다 작은 값들로 구성되도록 한다.
+
+```java
+
+public static void main(){...}
+
+static int partition(int[] arr, int start, int pivot){
+  int i = start - 1;
+
+  for(int j=start;j<pivot;j++){
+    if(arr[j] <= arr[pivot]){
+      i++;
+      swap(arr, i, j);
+    }
+  }
+
+  swap(arr, i+1, pivot);
+  return i+1;
 }
 
 ```
@@ -99,7 +121,23 @@ public class Main {
 - 데이터를 옮기는 것은 코드로 어떤식으로 표현하게 되는가?
   - swap 함수가 기본적으로 정렬 알고리즘에 많이 사용된다.
 
-# while을 사용한다는 의미
+# 배우게 된 점
+
+## 1. while을 사용한다는 의미
 
 문제에서 "~할 때 까지 계속" 이라는 동작을 구현할 때는 반복문을 사용하는데 for문 보다는 while문을 사용하는 것이 적합하다고 생각한다.
 for문은 정확한 목표점이 있을 때 반복적으로 사용하기 좋고 while문은 어떤 조건이 있는데 조건을 달성할 때까지 계속 사용하는 용도라고 느껴진다.
+
+# 정리
+
+피벗이 되는 값을 임의로 지정해 투포인터를 이용해 start와 end를 swap하면서 왼쪽과 오른쪽 파티션으로 나누면 왼쪽에는 피벗보다 작은 값, 오른쪽에는 피벗보다 큰 값으로 나뉘게 된다.
+
+이를 재귀적으로 호출하면 자연스럽게 퀵정렬이 된다.
+
+```java
+int pivot = partition(arr, left, right);
+// pivot-1과 pivot+1로 재귀 정렬을 하면 피벗위치에 값은 변하지 않게 된다.
+// 재귀로 호출해서 계속해서 정려하면서 내려가면 결과적으로 포인터의 인덱스가 변경되면서 정렬된 배열이 구해진다.
+quickSort(arr, left, pivot-1);
+quickSort(arr, pivot+1, right);
+```
