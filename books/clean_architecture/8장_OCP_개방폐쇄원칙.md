@@ -34,7 +34,55 @@
 - List (인터페이스) ← 좀 더 고수준·추상
 - ArrayList, LinkedList (구현체들) ← 저수준·구체
 
+# 실제 사용 예시
+
+OCP는 기존 코드는 변경하지 않고 변경에 대응하는 방법을 강조한다.
+Notification 예시를 보면서 OCP를 실습해보자.
+
+## 공통 규격 Interface 정의
+
+```java
+interface NotificationSender {
+    public void send(String message);
+}
+```
+
+## NotificationSender 구현체 정의 및 OCP를 지키는 변경 예시
+
+예를 들어 서비스 초기 당시 이메일을 보내 notification을 보내는 서비스가 있다고 해보자.
+다음과 같이 미리 정의해둔 인터페이스가를 사용해서 이메일을 보내는 클래스를 구현할 수 있을 것이다.
+
+```java
+class EmailSender implements NotificationSender {
+    public void send(String message){
+        System.out.println("이메일을 통해 공지를 보냅니다." + message);
+    }
+}
+```
+
+시간이 지나 SMS까지 공지사항을 보내야하는 상황이 생겼다. 우리는 OCP를 고려하여 미리 인터페이스를 정의해 두었기 때문에 다음과 같이 코드를 추가만해서 변경에 대응할 수 있게 된다.
+
+```java
+class SmsSender implements NotificationSender {
+    public void send(String message){
+        System.out.println("SMS를 통해 공지를 보냅니다." + message);
+    }
+}
+```
+
+만약 푸시까지 보낸다면? 걱정할게 없다. 다음과 같이 push message를 통해 공지사항을 보낼 수 있는 NotificationSender를 구현할 수 있다.
+
+```java
+class PushSender implements NotificationSender {
+    public void send(String message) {
+        System.out.println("Push 메세지를 통해 공지를 보냅니다." + message);
+    }
+}
+```
+
 # 정리
 
 저수준일 수록 구체적인 것에 가깝고 고수준일 수록 추상적이다.
 `Open Close Principle`은 확장에는 열려있고 변경에는 닫혀있다 라는 원리로 저수준 컴포넌트의 변경으로부터 고수준 컴포넌트를 보호할 수 있는 의존성 계층 구조가 만들어 지도록 해야한다.
+
+위 예시에서 본것과 같이 실전에서 OCP는 인터페이스를 적절하게 활용함으로써 우리가 알게 모르게 사용하고 있다. 하지만 보다 견고한 설계를 위해 정확한 개념과 의도를 가지고 코드를 작성하는 습관을 들여야 한다.
