@@ -1,4 +1,4 @@
-# E-Commerce Intelligence Platform (EIP)
+# E-Commerce Intelligence Project (EIP)
 
 # 프로젝트 개요
 
@@ -112,28 +112,28 @@
 
 ```
 [Dataset: Olist, Amazon, Criteo/Avazu]
-↓ (ETL)
+  ↓ (ETL)
 [Data Lake / Feature Store / Preprocessing]
-↓
+  ↓
 +---------------------------+
 | Kafka Event Streams |
 +---------------------------+
 (search events, ad clicks, orders, etc.)
-↓
+  ↓
 ┌────────────────────────────────────────────┐
-│ Microservices │
-│ │
-│ 1. Search Service (OpenSearch) │
-│ 2. Vector/Embedding Service │
-│ 3. Recommendation Service (ANN) │
-│ 4. Ads CTR Model Service │
-│ 5. Ranking Service (Search + Ads + Stock) │
-│ 6. Inventory/Logistics Service │
-│ 7. Indexer & Data Pipeline Service │
+│ Microservices                              │
+│                                            │
+│ 1. Search Service (OpenSearch)             │
+│ 2. Vector/Embedding Service                │
+│ 3. Recommendation Service (ANN)            │
+│ 4. Ads CTR Model Service                   │
+│ 5. Ranking Service (Search + Ads + Stock)  │
+│ 6. Inventory/Logistics Service             │
+│ 7. Indexer & Data Pipeline Service         │
 └────────────────────────────────────────────┘
-↓
+  ↓
 [API Gateway / BFF]
-↓
+  ↓
 [Client / Admin Dashboard]
 
 ```
