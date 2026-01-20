@@ -123,7 +123,7 @@
 ┌────────────────────────────────────────────┐
 │ Microservices                              │
 │                                            │
-│ 1. Search Service (OpenSearch)             │
+│ 1. Search Service (ElasticSearch)          │
 │ 2. Vector/Embedding Service                │
 │ 3. Recommendation Service (ANN)            │
 │ 4. Ads CTR Model Service                   │
@@ -144,7 +144,7 @@
 
 1. 검색엔진 전문성
 
-- OpenSearch 클러스터 관리
+- ElasticSearch 터 관리
 - Query DSL · BM25 튜닝
 - HNSW 벡터 검색 및 Hybrid Search 구현
 
@@ -192,7 +192,7 @@
 1. API Gateway / BFF
 2. Search Service (주 응답 생성)
 
-   - OpenSearch에서 BM25+벡터 하이브리드 검색
+   - ElasticSearch에M25+벡터 하이브리드 검색
    - (옵션) Reco 후보/Ads 후보를 “짧게” 붙임
 
 3. Ads Service (옵션/짧은 SLA)
@@ -208,7 +208,7 @@
 - Inventory Service: 재고 변경 이벤트 소유
 - Logistics Service: 배송/지연/반품 지표 소유
 - 이 둘은 Kafka로 이벤트 발행
-- Indexer Service(또는 Search Ingest)가 그 이벤트를 받아 OpenSearch 문서를 업데이트
+- Indexer Service(또는 Search Ingest)가 그 이벤트를 받아 ElasticSearch 업데이트
 
 Search는 “조회(Serving)”에 집중
 Inventory/Logistics는 “진실의 원천(Source of Truth)”로 존재
@@ -238,5 +238,3 @@ Search 인덱스는 “서빙 최적화용 뷰(Materialized View)”로 두는 �
 - Search Service가 소유하는 데이터
   - “검색 결과를 서빙하기 위한 인덱스/랭킹” 로직
   - query 분석, 검색 전처리, 하이브리드 서치 조합
-
-# 설계에 대해 좀더 고민하고 MSA를 어떻게 나눠 진행할지 검토

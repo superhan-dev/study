@@ -1,4 +1,4 @@
-# 📘 Kafka Fulfillment Event Architecture (실무형 v1)
+# 📘 Kafka Fulfillment Event Architecture
 
 ## 도메인별 토픽 + Canonical 메시지 설계 문서
 
@@ -8,7 +8,7 @@ Kafka 토픽 설계, Canonical Event 스키마, CSV 시뮬레이터 규칙,
 
 ---
 
-## 1. Kafka 토픽 설계 (실무형 v1)
+## 1. Kafka 토픽 설계
 
 ### 1.1 토픽 목록
 
