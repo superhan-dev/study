@@ -1,2 +1,6 @@
 .DS_Store
 **/.DS_Store
+
+.idea/
+# 로컬 mermaid 확인용 (커밋 대상 아님)
+note/carrer/ad_tech/_mermaid-preview/
