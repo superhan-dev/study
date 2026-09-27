@@ -66,6 +66,8 @@ sequenceDiagram
 ## 2. 왜 SSAI가 필요한가
 
 > "in today's wide array of streaming media players **the player may not be capable of executing dynamic ad responses or tracking impressions and interactions.** In these cases, an intermediary server is needed to insert ads dynamically into the video or audio stream."
+>
+> **번역**: 오늘날의 다양한 스트리밍 미디어 플레이어에서는 **플레이어가 동적 광고 응답을 실행하거나 임프레션·인터랙션을 트래킹하지 못할 수 있다.** 이런 경우 비디오나 오디오 스트림에 광고를 동적으로 삽입할 중간 서버가 필요하다.
 
 | 동기 | 설명 |
 |---|---|
@@ -79,18 +81,24 @@ sequenceDiagram
 ### 3.1. 쿠키가 없다
 
 > "the ad-stitching service cannot access cookies used in traditional client-side tracking. Instead, the ad-stitching service must identify devices where ads play by a combination of other methods."
+>
+> **번역**: ad-stitching 서비스는 전통적인 클라이언트 사이드 트래킹에 쓰이는 쿠키에 접근할 수 없다. 대신 광고가 재생되는 디바이스를 다른 방법들의 조합으로 식별해야 한다.
 
 → IFA(광고 식별자), IP, 디바이스 핑거프린트 조합에 의존하게 된다.
 
 ### 3.2. 모든 트래킹이 한 IP에서 나온다
 
 > "This server-to-server tracking process is problematic because **all the tracking is coming from one IP address.** To an ad server that is receiving tracking information, **the reports look similar to invalid traffic.**"
+>
+> **번역**: 이 서버 간 트래킹 방식은 **모든 트래킹이 하나의 IP 주소에서 오기 때문에** 문제가 된다. 트래킹 정보를 받는 애드서버 입장에서는 **그 리포트가 무효 트래픽(IVT)처럼 보인다.**
 
 이게 SSAI의 가장 실질적인 운영 문제다. 정상 트래픽이 IVT(invalid traffic)로 오판되면 그대로 매출 손실이다.
 
 ### 3.3. 서버 정보와 클라이언트 정보가 뒤섞인다
 
 > "the server is initiating the request on behalf of the client, so it is important to **separate information describing the server itself from information describing the client.**"
+>
+> **번역**: 서버가 클라이언트를 대신해 요청을 시작하므로, **서버 자신을 설명하는 정보와 클라이언트를 설명하는 정보를 분리하는 것**이 중요하다.
 
 ---
 
@@ -121,6 +129,9 @@ IVT 오판을 피하기 위해 **ad stitching 제공자는 반드시** 다음 �
 | `X-Device-*` | 클라이언트가 보냈을 다른 HTTP 헤더는 `X-Device-` 접두사를 붙여 포워딩 가능 |
 
 > **"The information included in these headers must match the information in the original ad request payload."**
+>
+> **번역**: **이 헤더들에 담긴 정보는 원래 광고 요청 페이로드의 정보와 일치해야 한다.**
+>
 > 헤더와 페이로드가 불일치하면 그 자체가 부정 신호로 취급될 수 있다.
 
 ### 요청 방식에 대한 과도기 규정
@@ -129,6 +140,8 @@ VAST 4.1 이전 버전(2.0/3.0/4.0)으로 서버사이드 요청을 하는 경�
 
 그리고 스펙의 예고:
 > "In the future, ad requests will move to a **POST based model**, which has performance and scaling implications, so the working group recommends that platforms start working on understanding architectural changes required to support POST messages at scale."
+>
+> **번역**: 앞으로 광고 요청은 **POST 기반 모델**로 옮겨 갈 것이며, 이는 성능과 확장성에 영향을 준다. 따라서 워킹 그룹은 플랫폼들이 대규모 POST 메시지를 지원하는 데 필요한 아키텍처 변경을 파악하는 작업을 지금부터 시작할 것을 권고한다.
 
 ---
 
@@ -145,6 +158,8 @@ VAST 4.1 이전 버전(2.0/3.0/4.0)으로 서버사이드 요청을 하는 경�
 
 **매크로 치환 책임**도 달라진다:
 > "In some cases a server might perform the macro replacement on behalf of the video player, for example in the case of **server-side ad insertion where the server is performing tracking pixel requests on behalf of the client.**"
+>
+> **번역**: 경우에 따라 서버가 비디오 플레이어를 대신해 매크로 치환을 수행할 수 있다. 예를 들어 **서버가 클라이언트를 대신해 트래킹 픽셀 요청을 수행하는 서버사이드 광고 삽입**의 경우다.
 
 ---
 
@@ -175,6 +190,8 @@ SSAI 서버는 **광고를 콘텐츠와 같은 인코딩 프로파일로 다시 
 그래서 VAST 4.0이 **`<Mezzanine>`** 을 도입했다:
 
 > "To support advertising across video platforms that include longform content and high-resolution screens, VAST 4 features include support for the raw, high-quality mezzanine file. **The mezzanine file is very large and cannot be used for ad display**, but ad-stitching services and other ad vendors use it to generate files at appropriate quality levels for the environment in which they play."
+>
+> **번역**: 롱폼 콘텐츠와 고해상도 화면을 포함하는 비디오 플랫폼 전반의 광고를 지원하기 위해, VAST 4에는 가공되지 않은 고화질 mezzanine 파일 지원이 포함된다. **mezzanine 파일은 매우 커서 광고 재생에 쓸 수 없지만**, ad-stitching 서비스와 기타 광고 벤더는 이 파일로 재생 환경에 맞는 화질 수준의 파일을 생성한다.
 
 관련 에러 코드:
 
@@ -199,6 +216,12 @@ VAST 스펙이 MRC 가이드라인을 인용하며 직접 짚는다:
 > 'The Measurement Guidelines require ad counting to use a **client-initiated approach**; **server-initiated ad counting methods** (the configuration in which impressions are counted at the same time the underlying page content is served) **are not acceptable** for counting ad impressions because they are the furthest away from the user actually seeing the ad.
 >
 > Measurement counting **may happen at the server side as long as it is initiated based on client-side events and measurement assets.** However, pass-through methods (where client-initiated measurement is passed to server-side collection) of signaling interactions detected on the client side from server infrastructure are acceptable.'"
+>
+> **번역**: 이 트래킹 권고안들은 서버사이드 트래킹을 지원하지만, **Media Rating Council(MRC)과 함께 개발된 IAB 임프레션 측정 가이드라인은 클라이언트 사이드 트래킹을 선호한다.**
+>
+> '측정 가이드라인은 광고 카운팅에 **클라이언트 개시 방식**을 요구한다. **서버 개시 광고 카운팅 방식**(기반 페이지 콘텐츠가 서빙되는 시점에 임프레션을 세는 구성)은 사용자가 실제로 광고를 보는 시점과 가장 동떨어져 있으므로 광고 임프레션 카운팅에 **허용되지 않는다.**
+>
+> 측정 카운팅은 **클라이언트 사이드 이벤트와 측정 에셋에 기반해 개시되는 한 서버 사이드에서 이루어져도 된다.** 또한 클라이언트에서 감지한 인터랙션을 서버 인프라로 전달하는 pass-through 방식(클라이언트 개시 측정을 서버 사이드 수집으로 넘기는 방식)도 허용된다.'
 
 **정리하면:**
 
@@ -214,13 +237,19 @@ VAST 스펙이 MRC 가이드라인을 인용하며 직접 짚는다:
 
 스펙도 현실을 인정한다:
 > "an ad-stitching service may have little or no control over ad play once the ad is stitched into the content and streamed to the client. **Impression reporting may vary by implementation.** For the ad stitching service in situations where the client cannot count impressions, an impression **could** be reported as the ad is sent on the stitched stream and therefore be **as close as possible to the opportunity to play**. Alternately, a session-oriented ad-stitching service may report impressions **from a given session at session completion**."
+>
+> **번역**: 광고가 콘텐츠에 스티칭되어 클라이언트로 스트리밍되고 나면 ad-stitching 서비스는 광고 재생을 거의 또는 전혀 통제하지 못할 수 있다. **임프레션 리포팅은 구현에 따라 다를 수 있다.** 클라이언트가 임프레션을 셀 수 없는 상황의 ad-stitching 서비스라면, 광고가 스티칭된 스트림으로 전송되는 시점에 임프레션을 보고**할 수도 있고**, 그렇게 하면 **재생 기회에 최대한 가깝게** 된다. 또는 세션 기반 ad-stitching 서비스는 **세션이 끝날 때 해당 세션의** 임프레션을 보고할 수 있다.
 
 그리고:
 > "**any impression measurement beyond the ad-stitched stream is out of the ad-stitching services' control and should be counted by the player whenever possible.**"
+>
+> **번역**: **ad-stitched 스트림 이후의 모든 임프레션 측정은 ad-stitching 서비스의 통제 밖이므로, 가능하면 언제나 플레이어가 세야 한다.**
 
 ### 감사(audit) 시 초점
 
 > "Auditing for compliance with IAB Viewable Ad Impression Measurement Guidelines should focus on **disclosing the process by which impressions are counted and any limitations** with reporting impressions in certain situations and environments."
+>
+> **번역**: IAB 뷰어블 광고 임프레션 측정 가이드라인 준수 여부에 대한 감사는 **임프레션을 세는 절차와**, 특정 상황·환경에서 임프레션을 보고할 때의 **한계를 공개하는 데** 초점을 맞춰야 한다.
 
 → **완벽한 측정이 아니라 "어떻게 세는지와 그 한계를 공개했는가"가 감사 기준이다.** 애드테크에서 "정확성"은 절대값이 아니라 **투명하게 공시된 방법론**이라는 점을 이해하는 게 중요하다.
 
@@ -237,6 +266,8 @@ VAST 스펙이 MRC 가이드라인을 인용하며 직접 짚는다:
 > - **`X-Device-User-Agent`** 헤더로 그 디바이스의 UA를 표시할 것
 >
 > "These HTTP headers allow recipients of impression notifications to **run anti-IVT checks using metadata about the end user device, rather than the server itself.**"
+>
+> **번역**: 이 HTTP 헤더들은 임프레션 통지를 받는 쪽이 **서버 자체가 아니라 최종 사용자 디바이스의 메타데이터로 anti-IVT 검사를 수행할 수 있게** 해 준다.
 
 > **BEST PRACTICE**: 서버사이드 통지 시 [ads.cert Call Sign](https://iabtechlab.com/wp-content/uploads/2021/09/2-ads-cert-call-signs-pc.pdf)을 확립하고 [ads.cert Authenticated Connections](https://iabtechlab.com/wp-content/uploads/2021/09/3-ads-cert-authenticated-connections-pc.pdf) 프로토콜로 **통지에 암호학적 서명**을 할 것. 수신자가 발신자를 인증할 수 있게 하여 부정을 방지한다.
 

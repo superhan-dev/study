@@ -44,6 +44,8 @@ flowchart LR
 
 robots.txt에서 영감을 받았다. 핵심 속성:
 > "A key attribute is that **the file is posted to the web serving system of the content, thus proving that the website authored the file.**"
+>
+> **번역**: 핵심 속성은 **파일이 해당 콘텐츠의 웹 서빙 시스템에 게시되므로, 그 웹사이트가 파일을 작성했음이 증명된다는 점**이다.
 
 즉 **파일이 그 도메인에 올라가 있다는 사실 자체가 소유권 증명**이다.
 
@@ -112,6 +114,8 @@ placeholder.example.com, placeholder, DIRECT, placeholder
 ```
 
 > "Prior versions of the ads.txt specification indicated that publishers may simply use an empty ads.txt file... **That method is now deprecated** because of ambiguities it creates and **should be ignored by consuming systems after March 1, 2020.**"
+>
+> **번역**: 이전 버전의 ads.txt 스펙은 퍼블리셔가 빈 ads.txt 파일을 올려도 된다고 했다… **이 방식은 이제 폐기되었다.** 모호함을 만들기 때문이며, **소비 시스템은 2020년 3월 1일 이후 이를 무시해야 한다.**
 
 ## 1.7. 캐시 만료
 
@@ -149,11 +153,15 @@ SUBDOMAIN=divisionone.example.com
 ## 2.1. 무엇을 보완하는가
 
 > "Ads.txt does not, however, make any attempt at revealing **the identities of the publisher account IDs** within their advertising platform(s)."
+>
+> **번역**: 그러나 ads.txt는 광고 플랫폼 안의 **퍼블리셔 계정 ID가 누구인지**를 밝히려는 시도는 전혀 하지 않는다.
 
 ads.txt는 "이 계정 ID가 내 인벤토리를 팔 수 있다"까지만 말한다. **그 계정 ID가 실제로 어떤 법인인지는 알 수 없다.** sellers.json이 그걸 공개한다.
 
 부가 효과:
 > "Sellers.json enables **smaller bid request object sizes** by allowing this information to be looked up and **cached 'offline'** rather than supplied with every bid request."
+>
+> **번역**: Sellers.json은 이 정보를 매 bid request에 싣는 대신 조회해서 **'오프라인'으로 캐시**할 수 있게 해 **bid request 객체 크기를 줄여 준다.**
 
 즉 판매자 이름/도메인을 매 bid request에 싣지 않고 오프라인 조회+캐시로 처리하여 요청 크기를 줄인다. 초당 수만 QPS 환경에서 이건 실질적인 이득이다.
 
@@ -166,6 +174,8 @@ ads.txt는 "이 계정 ID가 내 인벤토리를 팔 수 있다"까지만 말한
 - 캐시 기본 만료 **7일**
 
 > "Every advertising system listed in an ads.txt file **and any advertising system that is referenced from a SupplyChain object node** should publish a Sellers.json file."
+>
+> **번역**: ads.txt 파일에 등재된 모든 광고 시스템, **그리고 SupplyChain 객체 노드에서 참조되는 모든 광고 시스템**은 Sellers.json 파일을 게시해야 한다.
 
 ## 2.3. 객체 구조
 
@@ -190,6 +200,8 @@ ads.txt는 "이 계정 ID가 내 인벤토리를 팔 수 있다"까지만 말한
 ### Seller
 
 > "It is invalid for a `seller_id` to represent multiple entities. **Every `seller_id` must map to only a single entity** that is paid for inventory transacted with that `seller_id`. It is valid for a selling entity to have **multiple `seller_id`s** within an advertising system."
+>
+> **번역**: 하나의 `seller_id`가 여러 주체를 나타내는 것은 유효하지 않다. **모든 `seller_id`는 오직 하나의 주체에만 대응해야 하며**, 그 주체가 해당 `seller_id`로 거래된 인벤토리의 대금을 받는다. 반대로 하나의 판매 주체가 한 광고 시스템 안에서 **여러 개의 `seller_id`**를 갖는 것은 유효하다.
 
 | 속성 | 타입 | 설명 |
 |---|---|---|
@@ -249,6 +261,8 @@ ads.txt는 "이 계정 ID가 내 인벤토리를 팔 수 있다"까지만 말한
 ```
 
 > "these should be the same domains used in OpenRTB `Site.domain`, sellers.json, ads.txt **for reconciliation**"
+>
+> **번역**: 이 값들은 **대사(reconciliation)를 위해** OpenRTB `Site.domain`, sellers.json, ads.txt에 쓰인 것과 같은 도메인이어야 한다.
 
 ## 3.5. 예시
 

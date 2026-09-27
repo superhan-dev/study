@@ -36,6 +36,8 @@ VAST는 **하나의 광고 브레이크**에 대한 응답이다. 그런데 30�
 
 IAB 정의:
 > "an XML template that video content owners can use to describe the structure for ad inventory insertion **when they don't control the video player or the content distribution outlet.**"
+>
+> **번역**: 비디오 콘텐츠 소유자가 **비디오 플레이어나 콘텐츠 배포 채널을 통제하지 못할 때** 광고 인벤토리 삽입 구조를 기술하는 데 사용할 수 있는 XML 템플릿.
 
 즉 **콘텐츠 소유자가 플레이어를 통제하지 못할 때** 광고 삽입 구조를 기술하는 수단이다. 유튜브/OTT에 콘텐츠를 배포하는 방송사의 상황이 정확히 이것이다.
 
@@ -147,6 +149,8 @@ VPAID(Video Player-Ad Interface Definition)는 **광고 크리에이티브가 �
 그런데 VAST 스펙이 직접 지적하듯:
 > "Verification services adopted VPAID in order to run code that verifies and measures playback (including viewability)."
 > "**An unfortunate side effect of this approach is that, rather than simply enabling monitoring of player-controlled video playback, responsibility for creative rendering is placed on the verification service.** In many cases, multiple data-collection VPAID 'wrappers' may be used, leading to a **fragile chain of intermediaries in the critical path** which can significantly delay page rendering and create a negative experience for the viewer."
+>
+> **번역**: 검증 서비스들은 재생(뷰어빌리티 포함)을 검증·측정하는 코드를 실행하기 위해 VPAID를 채택했다. **이 방식의 불행한 부작용은 플레이어가 통제하는 비디오 재생을 단순히 모니터링하는 데 그치지 않고, 크리에이티브 렌더링 책임이 검증 서비스에 넘어간다는 점이다.** 많은 경우 데이터 수집용 VPAID '래퍼'가 여러 겹 쓰이며, 그 결과 **핵심 경로에 취약한 중개자 체인**이 생겨 페이지 렌더링을 크게 지연시키고 시청자 경험을 해칠 수 있다.
 
 즉 **"임프레션 시점에 코드를 실행할 유일한 수단"이라는 이유로 측정 벤더들이 VPAID를 전용**했고, 그 결과 렌더링 책임이 측정 업체에 넘어가 체인이 취약해졌다.
 
@@ -173,6 +177,8 @@ VPAID(Video Player-Ad Interface Definition)는 **광고 크리에이티브가 �
 
 VAST 스펙의 권고:
 > "The IAB Tech Lab **strongly recommends using code that supports the Open Measurement Interface Definition (OMID)** for this purpose, and **strongly against using VPAID (which is being retired).**"
+>
+> **번역**: IAB Tech Lab은 이 목적으로 **OMID(Open Measurement Interface Definition)를 지원하는 코드를 사용할 것을 강력히 권고**하며, **VPAID(폐기 진행 중) 사용에는 강력히 반대한다.**
 
 **여전히 알아야 하는 이유**: 레거시 인벤토리에 VPAID가 남아 있고, AdCOM API Frameworks 리스트에 `1`=VPAID 1.0, `2`=VPAID 2.0이 아직 존재한다. "우리 트래픽에 VPAID가 몇 %인가"를 측정하는 것 자체가 마이그레이션 프로젝트의 첫 단계다.
 
@@ -183,9 +189,13 @@ VAST 스펙의 권고:
 ## 3.1. 개념
 
 > "While VAST addresses how publishers discover various metadata assets related to an ad campaign, **SIMID addresses how the publisher's media player should communicate and interface with a rich interactive layer and vice versa.** As such, one can think of the SIMID creative as one of the assets listed in a VAST document."
+>
+> **번역**: VAST가 퍼블리셔가 광고 캠페인과 관련된 각종 메타데이터 에셋을 찾는 방법을 다룬다면, **SIMID는 퍼블리셔의 미디어 플레이어가 리치 인터랙티브 레이어와 어떻게 통신하고 연동해야 하는지(그 반대 방향도)를 다룬다.** 따라서 SIMID 크리에이티브는 VAST 문서에 나열된 에셋 중 하나로 생각할 수 있다.
 
 **핵심 원칙 — 인터랙티브 레이어와 미디어 에셋의 분리.**
 > "This clear separation allows publisher players to be in control of their streams and **enables use cases such as server-side ad insertion (SSAI), as well as live streaming.**"
+>
+> **번역**: 이러한 명확한 분리 덕분에 퍼블리셔 플레이어가 자기 스트림을 통제할 수 있고, **서버사이드 광고 삽입(SSAI)과 라이브 스트리밍 같은 사용 사례가 가능해진다.**
 
 - 현재 버전: **SIMID 1.2**
 - 1.2 변경점: L자형 squeeze-back 처리, 반응형 광고의 미지 사이즈를 `-1`로 표현, **세션 ID는 암호학적으로 안전해야 함**, 딥링크 관련 주석
@@ -235,7 +245,7 @@ VAST 스펙의 권고:
 
 ## 3.5. 범위와 한계 (중요)
 
-- **뷰어빌리티 측정에 SIMID를 쓰면 안 된다.** 스펙 명시: "SIMID should not be set up to measure viewability. IAB Tech Lab offers resources for measurement in its Open Measurement initiative."
+- **뷰어빌리티 측정에 SIMID를 쓰면 안 된다.** 스펙 명시: "SIMID should not be set up to measure viewability. IAB Tech Lab offers resources for measurement in its Open Measurement initiative." — *번역: SIMID를 뷰어빌리티 측정용으로 설정해서는 안 된다. IAB Tech Lab은 Open Measurement 이니셔티브를 통해 측정용 리소스를 제공한다.*
 - **클라이언트에서 임프레션 전에 어떤 미디어를 보여줄지 결정할 수 없다.** 미디어 파일은 VAST `MediaFile` 노드로 SIMID와 함께 내려와야 하므로
 - **일부 TV/OTT 박스는 SIMID 구현이 불가능하다** — 외부 에셋 로딩 제한, HTML 렌더링 능력 제한, HTML과 오디오/비디오 동시 표시 불가
 - 인터랙티브/동적 콘텐츠 외의 용도로 SIMID를 쓰는 것은 **스펙 의도에 반한다**
@@ -243,6 +253,8 @@ VAST 스펙의 권고:
 ## 3.6. 프라이버시
 
 > "As long as the ad is contained in a SIMID container, **it cannot access any data the publisher may have in the player app or the environment** where the player is installed."
+>
+> **번역**: 광고가 SIMID 컨테이너 안에 담겨 있는 한, 광고는 **퍼블리셔가 플레이어 앱이나 플레이어가 설치된 환경에 가지고 있는 어떤 데이터에도 접근할 수 없다.**
 
 샌드박스가 곧 프라이버시 경계다. 동의 처리는 SIMID 로드 **이전**, 광고 거래 단계에서 끝난다.
 

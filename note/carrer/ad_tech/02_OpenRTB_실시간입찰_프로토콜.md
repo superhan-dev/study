@@ -115,6 +115,8 @@ flowchart LR
 OpenRTB 2.6의 간판 기능. Implementation Notes §7.6.
 
 > "An ad pod is the term describing an ad break of the type you'd see in a TV-like viewing experience or hear on a radio stream."
+>
+> **번역**: Ad Pod는 TV 같은 시청 환경에서 보거나 라디오 스트림에서 듣게 되는 형태의 광고 브레이크를 가리키는 용어다.
 
 ### 2.1. 세 가지 Pod 구조
 
@@ -132,6 +134,8 @@ OpenRTB 2.6의 간판 기능. Implementation Notes §7.6.
 - 구매자는 `mincpmpersec`가 있으면 그것을, 없으면 `bidfloor`를 본다
 - **핵심 주의:**
   > "Buyers should expect that final pod construction is done by the seller. Buyers who submit N bids for a particular pod may find that the seller selects anywhere between 0 to N of those bids to construct the pod... Furthermore, the seller may co-mingle bids from other buyers in that pod."
+  >
+  > **번역**: 구매자는 최종 Pod 구성을 판매자가 한다는 점을 예상해야 한다. 특정 Pod에 N개의 입찰을 제출한 구매자는 판매자가 그중 0개에서 N개 사이 어느 수만큼을 골라 Pod를 구성한다는 것을 알게 될 수 있다... 더 나아가 판매자는 그 Pod에 다른 구매자의 입찰을 섞어 넣을 수도 있다.
 
 즉 **N개 입찰해도 0~N개만 채택될 수 있고, 다른 구매자 광고와 섞인다.** DSP 입장에서 경쟁사 광고와 같은 브레이크에 나란히 붙는 경우(competitive separation 위반)를 통제하기 어렵다는 뜻이고, 이래서 `Imp.video`의 블록 카테고리(`bcat`)와 `Bid.cat` 관리가 중요해진다.
 

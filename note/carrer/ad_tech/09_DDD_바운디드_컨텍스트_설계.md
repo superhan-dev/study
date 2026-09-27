@@ -302,11 +302,15 @@ stateDiagram-v2
 ```
 
 > "Mezzanine is in the process of being downloaded for the first time. **Download may take several hours.**" — VAST 에러코드 407
+>
+> **번역**: Mezzanine을 처음으로 다운로드하는 중이다. **다운로드에는 수 시간이 걸릴 수 있다.**
 
 **수 시간 걸리는 비동기 워크플로**가 도메인 안에 있다는 것은, 이것이 밀리초 단위 서빙과 같은 컨텍스트일 수 없다는 뜻이다. 트랜스코딩은 외부 벤더에 위임하는 경우가 많아 부패 방지 계층도 필요하다.
 
 또한 스펙의 제약:
 > "If the ad creative is changed in any way, **it should be served with a new creative identifier.**"
+>
+> **번역**: 광고 소재가 어떤 식으로든 변경되었다면, **새 크리에이티브 식별자로 서빙해야 한다.**
 
 → `UniversalAdId`는 **불변 식별자**이고, 소재 변경은 새 애그리게이트 인스턴스 생성이다. 이게 도메인 규칙으로 모델에 박혀야 SSAI 캐시 오염을 막을 수 있다.
 
@@ -531,6 +535,10 @@ public BidDecision decide(BidOpportunity opportunity) {
 > OpenRTB 2.6 §2.6: "As of OpenRTB 2.6-202211, OpenRTB's version number is only incremented on breaking changes... The current version of the OpenRTB specification is **updated approximately once a month** if there are non-breaking improvements to be released such as new fields, objects, or values in enumerated lists."
 >
 > "Bidders and exchanges **must tolerate receiving new or unexpected fields and enumerated list values gracefully**"
+>
+> **번역**: OpenRTB 2.6-202211부터 OpenRTB 버전 번호는 하위 호환이 깨지는 변경에서만 올라간다… 새 필드·객체·열거형 값 추가처럼 호환을 깨지 않는 개선이 있으면 현행 OpenRTB 스펙은 **대략 월 1회 갱신된다.**
+>
+> 입찰자와 거래소는 **새롭거나 예상치 못한 필드와 열거형 값을 받아도 문제없이 견뎌야 한다.**
 
 **월 단위로 필드와 enum 값이 추가되는 외부 스키마다.** ACL이 없으면 그 변화가 도메인 전체로 번진다. 그리고 AdCOM 열거형은 OpenRTB 버전과 무관하게 계속 늘어나므로, 하드코딩된 매칭은 반드시 깨진다.
 

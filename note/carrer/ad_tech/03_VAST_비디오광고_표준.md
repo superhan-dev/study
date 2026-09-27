@@ -9,6 +9,8 @@
 ## 1. VAST란 무엇인가
 
 > "The Video Ad Serving Template or VAST is a template for structuring ad tags that serve video and audio ads to media players. Using an XML schema, VAST transfers important metadata about an ad from the ad server to a media player."
+>
+> **번역**: VAST(Video Ad Serving Template)는 미디어 플레이어에 비디오·오디오 광고를 서빙하는 광고 태그를 구조화하기 위한 템플릿이다. VAST는 XML 스키마를 사용해 광고에 관한 중요한 메타데이터를 애드서버에서 미디어 플레이어로 전달한다.
 
 핵심은 이거다. **OpenRTB는 "누가 얼마에 살 것인가"를 정하고, VAST는 "그래서 무엇을 어떻게 틀 것인가"를 정한다.**
 
@@ -140,9 +142,13 @@ flowchart LR
 
 `progress`는 quartile을 대체하거나 병행할 수 있다:
 > "When percentages are used, the progress event can offer tracking that represent the quartile events."
+>
+> **번역**: 퍼센트 값을 쓰면 progress 이벤트로 quartile 이벤트에 해당하는 트래킹을 제공할 수 있다.
 
 **스킵 광고에서의 progress 활용**:
 > "if the tracking offset is set to 00:00:15 (15 seconds) but the ad is skipped after 20 seconds, then a creativeView event may be recorded"
+>
+> **번역**: 트래킹 오프셋이 00:00:15(15초)로 설정되어 있는데 광고가 20초 뒤에 스킵되었다면 creativeView 이벤트가 기록될 수 있다.
 
 즉 "몇 초 이상 보면 과금 대상 조회로 인정"이라는 계약 조건을 `progress@offset`으로 표현한다.
 
@@ -155,6 +161,8 @@ flowchart LR
 특별한 것 하나:
 - **`notUsed`** — 이 광고는 재생되지 않았고 앞으로도 안 된다(예: 특정 브레이크용으로 프리페치했으나 선택되지 않음). **종결 이벤트이며 이 이후 다른 트래킹을 보내면 안 된다.**
   > "This allows ad servers to reuse an ad earlier than otherwise would be possible due to budget/frequency capping."
+  >
+  > **번역**: 이를 통해 애드서버는 예산·빈도 제한 때문에 원래 가능했을 시점보다 더 일찍 광고를 재사용할 수 있다.
 
   👉 **예산/빈도 제어 관점에서 대단히 중요한 이벤트다.** 프리페치로 예약 차감된 예산을 조기에 반환할 수 있게 해 준다. 단 플레이어 지원은 선택이고 best-effort다(플레이어가 먼저 죽으면 못 보냄).
 
@@ -164,6 +172,8 @@ flowchart LR
 
 **`creativeView`는 impression이 아니다.** 스펙이 직접 구분한다:
 > "Not to be confused with an impression, this event indicates that an individual creative portion of the ad was viewed. An impression indicates that at least a portion of the ad was displayed; however an ad may be composed of multiple creative."
+>
+> **번역**: 임프레션과 혼동하지 말 것. 이 이벤트는 광고의 개별 크리에이티브 부분이 조회되었음을 나타낸다. 임프레션은 광고의 적어도 일부가 표시되었음을 뜻하지만, 하나의 광고는 여러 크리에이티브로 구성될 수 있다.
 
 Companion Ads는 브라우저 기술을 쓰므로 VAST 이벤트로는 **`creativeView`만** 추적 가능하다.
 
@@ -174,6 +184,8 @@ Companion Ads는 브라우저 기술을 쓰므로 VAST 이벤트로는 **`creati
 ### 4.5. 이벤트 발화를 플레이어가 혼자 알 수 없는 경우
 
 > "In some cases the media player cannot detect that an event has occurred unless a third party, such as the ad creative or a verification script, communicates the event through a framework such as OMID or VPAID."
+>
+> **번역**: 경우에 따라 미디어 플레이어는 광고 크리에이티브나 검증 스크립트 같은 제3자가 OMID나 VPAID 같은 프레임워크를 통해 이벤트를 알려주지 않으면 이벤트 발생을 감지할 수 없다.
 
 예: NonLinear의 `adExpand`는 광고가 플레이어에게 "나 확장했다"고 알려줘야 한다.
 
@@ -196,6 +208,8 @@ Companion Ads는 브라우저 기술을 쓰므로 VAST 이벤트로는 **`creati
 
 핵심 규칙:
 > "All `<Impression>` URIs in the InLine response and any Wrapper responses preceding it **should be triggered at the same time** when the impression for the ad occurs, or as close in time as possible... **to prevent impression-counting discrepancies.**"
+>
+> **번역**: InLine 응답과 그에 앞선 모든 Wrapper 응답의 `<Impression>` URI는 광고의 임프레션이 발생할 때 **동시에 호출되어야 한다**. 또는 임프레션 발생 시점에 최대한 가깝게... **임프레션 집계 불일치를 막기 위해서다.**
 
 - 같은 `id`를 가진 Impression URI들은 **동시에** 요청해야 한다
 - 임프레션을 보낼 이유가 없으면 **`about:blank`** 플레이스홀더를 쓰고, 플레이어는 이 값이면 요청하지 않는다
@@ -203,6 +217,8 @@ Companion Ads는 브라우저 기술을 쓰므로 VAST 이벤트로는 **`creati
 그리고 OpenRTB Implementation Notes가 못 박는다:
 > **"The IAB prescribes that for video, the VAST `<Impression>` event is the official signal that the billable event has occurred."**
 > "Demand chain participants are **discouraged** from using billing notice URLs (burl) for video/audio transactions."
+>
+> **번역**: **IAB는 비디오의 경우 VAST `<Impression>` 이벤트를 과금 이벤트가 발생했다는 공식 신호로 규정한다.** 수요 체인 참여자는 비디오·오디오 거래에 과금 통지 URL(burl)을 사용하는 것이 **권장되지 않는다.**
 
 즉 **비디오/오디오 과금 기준은 `burl`이 아니라 VAST `<Impression>`이다.** → 상세는 `06_광고이벤트_트래킹과_정산대사.md`
 
@@ -219,6 +235,8 @@ Companion Ads는 브라우저 기술을 쓰므로 VAST 이벤트로는 **`creati
 | `<ViewUndetermined>` | **판정 자체가 불가능할 때** |
 
 > "The point at which these tracking resource files are pinged **depends on the viewability standard the player has implemented**, in agreement with or with the understanding of the buyer."
+>
+> **번역**: 이 트래킹 리소스를 호출하는 시점은 구매자와의 합의 또는 구매자의 이해하에 **플레이어가 구현한 뷰어빌리티 기준에 따라 달라진다.**
 
 즉 **기준은 스펙이 아니라 당사자 합의**다. 업계 표준은 MRC 기준(비디오: 픽셀 50% 이상이 연속 2초) → `06` 문서 참조.
 
@@ -242,6 +260,8 @@ Companion Ads는 브라우저 기술을 쓰므로 VAST 이벤트로는 **`creati
 
 **왜 중요한가 — SSAI 때문이다.**
 > "Ad-stitching vendors rely on a unique creative identifier for managing the mezzanine source file and its cache of transcoded files... **If the ad creative is changed in any way, it should be served with a new creative identifier.**"
+>
+> **번역**: 애드 스티칭 벤더는 Mezzanine 원본 파일과 트랜스코딩 파일 캐시를 관리하기 위해 고유한 크리에이티브 식별자에 의존한다... **광고 크리에이티브가 조금이라도 바뀌었다면 새 크리에이티브 식별자로 서빙해야 한다.**
 
 SSAI 서버는 UniversalAdId로 "이 소재 이미 트랜스코딩해뒀나?"를 판단한다. 소재를 바꿨는데 ID를 안 바꾸면 **옛날 영상이 계속 나간다.**
 
@@ -353,6 +373,8 @@ VAST는 원래 **응답 프로토콜**이었지만 4.1부터 **매크로 기반�
 
 향후 방향에 대해 스펙이 밝힌 것:
 > "In the future, ad requests will move to a **POST based model**, which has performance and scaling implications, so the working group recommends that platforms start working on understanding architectural changes required to support POST messages at scale."
+>
+> **번역**: 앞으로 광고 요청은 **POST 기반 모델**로 옮겨 갈 것이며, 이는 성능과 확장성에 영향을 준다. 따라서 워킹 그룹은 플랫폼들이 대규모 POST 메시지를 지원하는 데 필요한 아키텍처 변경을 파악하는 작업을 시작할 것을 권고한다.
 
 ---
 
