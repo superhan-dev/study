@@ -1,0 +1,10 @@
+# 실제 운영 설정 원본 / 민감 정보
+*.local.conf
+*.secret
+.env
+
+# 녹화 영상, 로그
+media/
+*.mp4
+*.jpg
+*.log
